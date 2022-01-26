@@ -1,0 +1,2 @@
+window - browser
+global - node

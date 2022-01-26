@@ -1,0 +1,1 @@
+when and why a component in the tree gets rendered
