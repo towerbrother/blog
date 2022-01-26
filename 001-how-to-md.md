@@ -155,15 +155,69 @@ or
 
 <pre>
 ~~~~
-This is a
-piece of code
-in a block
+{
+  "firstName": "Bruce",
+  "lastName": "Wayne",
+  "job": "Batman"
+}
+~~~~
+
+or this way
+
+```
+.blue {
+  color: blue;
+}
+```
+</pre>
+
+~~~~
+{
+  "firstName": "Bruce",
+  "lastName": "Wayne",
+  "job": "Batman"
+}
 ~~~~
 
 ```
-This too
+.blue {
+  color: blue;
+}
+```
+
+### Code block - specify language
+
+<pre>
+~~~~JSON
+{
+  "firstName": "Bruce",
+  "lastName": "Wayne",
+  "job": "Batman"
+}
+~~~~
+
+or this way
+
+```css
+.blue {
+  color: blue;
+}
 ```
 </pre>
+
+~~~~JSON
+{
+  "firstName": "Bruce",
+  "lastName": "Wayne",
+  "job": "Batman"
+}
+~~~~
+
+```css
+.blue {
+  color: blue;
+}
+```
 
 ### Headers
 
@@ -192,6 +246,36 @@ This too
 ##### Header 5
 
 ###### Header 6
+
+### Tables
+
+<pre>
+| Syntax      | Description |
+| ----------- | ----------- |
+| Header      | Title       |
+| Paragraph   | Text        |
+</pre>
+
+| Syntax      | Description |
+| ----------- | ----------- |
+| Header      | Title       |
+| Paragraph   | Text        |
+
+You can format text in tables but you can’t use headings, blockquotes, lists, horizontal rules, images, or most HTML tags.
+
+### Tables alignment
+
+<pre>
+| Syntax      | Description | Test Text     |
+| :---        |    :----:   |          ---: |
+| Header      | Title       | Here's this   |
+| Paragraph   | Text        | And more      |
+</pre>
+
+| Syntax      | Description | Test Text     |
+| :---        |    :----:   |          ---: |
+| Header      | Title       | Here's this   |
+| Paragraph   | Text        | And more      |
 
 ## Additional resources you can check
 
