@@ -179,7 +179,7 @@ counter.minusOne(); // -1
 
 ## Closure scope chain
 
-It may not be immediately obvious, but the depth to which closures can go is theoretically infinite. As per the definition, any inner function would be considered a closure to the outer scope variables or parameters. As such, the inner function of an inner function would be a closure itself.
+It may not be immediately obvious, but the depth to which closures can go is not limited to one. As per the definition, any inner function is a closure to the outer scope variables or parameters. As such, the inner function of an inner function is a closure itself.
 
 ```js
 const deepSum = function (a) {
