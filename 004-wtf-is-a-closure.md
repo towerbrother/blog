@@ -1,8 +1,17 @@
 # WTF is a Javascript Closure
 
-Javascript variables can belong to the **local** or **global** scope. Global variables can be made local using **closures**.
+Another one of those confusing topics that we never spend enough time nailing it down.
 
-> We talk of **Closure** when an inner function has access to the variables/parameters of its outer function, even after the outer function has returned.
+## TL;DR
+
+We talk of **closure** when an inner function has access to the variables/parameters of its outer function, even after the outer function has returned.
+
+
+## Closures
+
+Javascript variables can belong to the **local** or **global** scope. Global variables can be made local (private) using **closures**.
+
+Javascript supports the creation of **nested functions**. A nested function has access to the variables and parameters of its outer function even when the outer function has returned. The inner function is called a **closure**, as it closes on the variables and parameters of the lexical scope where it is implemented. A couple of very simple examples below.
 
 ```js
 function outerFunc() {
@@ -28,15 +37,15 @@ const closure = outerFunc(59);
 closure(); // logged: 59
 ```
 
-As the examples above show quite clearly, Javascript supports the creation of **nested functions**. An important characteristic of closures is that outer variables can keep their states between multiple calls. We can show this clearly below in the (traditional) _counter_ example.
-
 ## Let's build a Counter
 
 Let's assume we want to be able to count something, it does not matter what. What you want though, is that the value of **counter** is made available to all functions. Let's explore a few options to build up to closures and (hopefully) understand their value.
 
 ### Option #1 - using a global variable
 
-You could use a global variable and build a simple function to increase the value of that variable. As you can see below though, this is not a good solution. The variable counter can be manually modified and it is therefore **not** a reliable way to build our counter.
+You could use a global variable and build a simple function to increase the value of that variable. 
+
+As you can see below though, this is not a good solution. The variable counter can be manually modified and it is therefore **not** a reliable way to build our counter.
 
 ```js
 let counter = 0; // global variable
@@ -56,9 +65,9 @@ plus(); // counter: 60
 
 ### Option #2 - using a local variable
 
-Exchanging the global counter with a local counter and accessing the local counter by letting the function return it could be a step in the right direction. Unfortunately, doing that, we actually broke the `plus()` function.
+Exchanging the global counter variable with a local counter variable and accessing the local counter variable by letting the function return it could be a step in the right direction. Unfortunately, doing that, we actually broke the `plus()` function.
 
-Local variables are "destroyed" upon returning of their functions and, every time `plus()` is called, a new counter variable is declared and initialised to 0. That is why we always get value 1 in the console.
+Local variables are "destroyed" when their functions are returned and, every time `plus()` is called, a new counter variable is declared and initialised to `0`. That is why we always get value `1` in the console.
 
 ```js
 function plus() {
@@ -96,7 +105,7 @@ console.log("counter:", plus()); // counter: 1
 
 This first attempt, unfortunately, does not help us solve our issue as we still have the issue of executing `let counter = 0;` every time we call `plus()`.
 
-What we need is a **closure**.
+What we need is, surprise surprise, a **closure**.
 
 Instead of returning _counter_ directly, we return the inner function (what before was the `add()` function) that has access to _counter_ and it will still have access to _counter_ even after `plus()` has returned.
 
@@ -109,7 +118,7 @@ function plus() {
   return addOne;
 }
 
-const add = plus(); // add is now a closure
+const add = plus(); // "add" is now a closure
 
 console.log("counter:", add()); // counter: 1
 console.log("counter:", add()); // counter: 2
@@ -120,7 +129,7 @@ The outer function `plus()` is called only once and it returns a function expres
 
 `add` is what, in Javascript, we call a **closure**. A function that can access the `counter` variable in the parent lexical scope, even after the parent function has closed.
 
-> We say that `addOne` closes over the `counter` variable (not its value).
+> We say that `addOne` closes over the `counter` variable (not its value!).
 
 The `counter` variable has now being transformed into a **private** variable. Its state is protected and it cannot be tempered with, but by calling the `add` function expression.
 
