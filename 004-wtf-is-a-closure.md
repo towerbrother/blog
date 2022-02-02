@@ -177,6 +177,58 @@ counter.reset(); // 0
 counter.minusOne(); // -1
 ```
 
+## Stale closure
+
+Depending on how you structure your code, you may find yourself building a **stale closure**.
+
+A stale closure is defined as a function that captures variables with values that are outdated.
+
+Let's use a counter as example again. `makeAdder(value)` is a factory function, as we already stated above, that returns three methods: `plus()`, `minus()` and `log()`. Log, as per the implementation below is a **stale closure** as it closes on a variable with an outdated value.
+
+```js
+function makeAdder(value) {
+    let count = 0;
+
+    const plus = () => count += value;
+    const minus = () => count -= value;
+
+    let message = `Count: ${count}`;
+    const log = () => console.log(message);
+
+    return [plus, minus, log];
+}
+
+const [plus, minus, log] = makeAdder(1); // array destructuring
+plus(); // 1
+plus(); // 2
+minus(); // 1
+log(); // Count: 0 !!!! we expected 1
+```
+
+To fix the issue, we should move the `message` variable into the `log()` function. `log()` is no longer a stale closure.
+
+```js
+function makeAdder(value) {
+    let count = 0;
+
+    const plus = () => count += value;
+    const minus = () => count -= value;
+
+    const log = () => {
+        let message = `Count: ${count}`;
+        console.log(message);
+    }
+
+    return [plus, minus, log];
+}
+
+const [plus, minus, log] = makeAdder(1); // array destructuring
+plus(); // 1
+plus(); // 2
+minus(); // 1
+log(); // Count: 1
+```
+
 ## Closure scope chain
 
 It may not be immediately obvious, but the depth to which closures can go is not limited to one. As per the definition, any inner function is a closure to the outer scope variables or parameters. As such, the inner function of an inner function is a closure itself.
